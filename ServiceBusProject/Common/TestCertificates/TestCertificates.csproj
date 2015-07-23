@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52B3FE72-1C96-475C-94D5-34A4623A7FC0}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{6E9D31E0-6FD4-495D-83E9-165241817E66}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EchoServices</RootNamespace>
-    <AssemblyName>EchoServices</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>TestCertificates</RootNamespace>
+    <AssemblyName>TestCertificates</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,18 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.ServiceBus">
-      <HintPath>..\packages\WindowsAzure.ServiceBus.2.7.5\lib\net40-full\Microsoft.ServiceBus.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Configuration">
-      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,27 +39,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EchoService.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="MyCertificates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <EmbeddedResource Include="JohnsonSTS.Test.Client.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\CustomWCFComponents\CustomWCFComponents.csproj">
-      <Project>{89ead60b-7e32-4a24-8eb9-617cf8f9e745}</Project>
-      <Name>CustomWCFComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Common\MyContract\MyContract.csproj">
-      <Project>{3c14ba0a-0cbf-4803-8868-98ac12b48900}</Project>
-      <Name>MyContract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Common\TestCertificates\TestCertificates.csproj">
-      <Project>{6e9d31e0-6fd4-495d-83e9-165241817e66}</Project>
-      <Name>TestCertificates</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="JohnsonSTS.Test.Resource.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JohnsonSTS.Test.Service.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JohnsonSTS.Test.Client.cer" />
+    <EmbeddedResource Include="JohnsonSTS.Test.Resource.cer" />
+    <EmbeddedResource Include="JohnsonSTS.Test.Service.cer" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="JohnsonSTS.Test.FP.cer" />
+    <EmbeddedResource Include="JohnsonSTS.Test.FP.pfx" />
+    <EmbeddedResource Include="JohnsonSTS.Test.Service1.cer" />
+    <EmbeddedResource Include="JohnsonSTS.Test.Service1.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Johnson.Test.Client.cer" />
+    <EmbeddedResource Include="Johnson.Test.Client.pfx" />
+    <EmbeddedResource Include="Johnson.Test.Service.cer" />
+    <EmbeddedResource Include="Johnson.Test.Service.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{89EAD60B-7E32-4A24-8EB9-617CF8F9E745}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CustomWCFComponents</RootNamespace>
+    <AssemblyName>CustomWCFComponents</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomBindings\AnonymousCertificateBinding.cs" />
+    <Compile Include="CustomBindings\CertificateOverTransportBinding.cs" />
+    <Compile Include="CustomBindings\UserNameCertificateBinding.cs" />
+    <Compile Include="CustomBindings\UserNameSecureConversationBinding.cs" />
+    <Compile Include="CustomBindings\UserNameSslNegotiated.cs" />
+    <Compile Include="CustomBindings\SspiNegotiatedOverTransportBinding.cs" />
+    <Compile Include="CustomBindings\MutualCertificateBinding.cs" />
+    <Compile Include="MessageInspectors\ClientAndMessageInspector.cs" />
+    <Compile Include="SecurityTokens\BindingHelper.cs" />
+    <Compile Include="SecurityTokens\CreditCardClientCredentials.cs" />
+    <Compile Include="SecurityTokens\CreditCardClientCredentialsSecurityTokenManager.cs" />
+    <Compile Include="SecurityTokens\CreditCardInfo.cs" />
+    <Compile Include="SecurityTokens\CreditCardSecurityTokenSerializer.cs" />
+    <Compile Include="SecurityTokens\CreditCardServiceCredentials.cs" />
+    <Compile Include="SecurityTokens\CreditCardServiceCredentialsSecurityTokenManager.cs" />
+    <Compile Include="SecurityTokens\CreditCardToken.cs" />
+    <Compile Include="SecurityTokens\CreditCardTokenAuthenticator.cs" />
+    <Compile Include="SecurityTokens\CreditCardTokenAuthorizationPolicy.cs" />
+    <Compile Include="SecurityTokens\CreditCardTokenConstants.cs" />
+    <Compile Include="SecurityTokens\CreditCardTokenParameters.cs" />
+    <Compile Include="SecurityTokens\CreditCardTokenProvider.cs" />
+    <Compile Include="OldClaimsConstant\OperationClaimTypes.cs" />
+    <Compile Include="OldClaimsConstant\ResourceClaimTypes.cs" />
+    <Compile Include="ServiceIdentityVerifier\CustomIdentityVerifier.cs" />
+    <Compile Include="X509CertificateValidator\CustomX509CertificateValidator.cs" />
+    <Compile Include="AuthorizationPolicy\MyClaimsAuthorizationPolicy.cs" />
+    <Compile Include="MembershipProvider\MyMemberShipProvider.cs" />
+    <Compile Include="RoleProvider\MyRoleProvider.cs" />
+    <Compile Include="CustomBindings\MySecureCustomBinding.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceAuthorizationManager\MyServiceAuthorizationManager.cs" />
+    <Compile Include="CustomBindings\UserNameOverTransportBinding.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyBehaviors\MyBehaviors.csproj">
+      <Project>{1F4466EE-1649-42E3-BD40-522115CF3AB9}</Project>
+      <Name>MyBehaviors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -61,6 +61,10 @@
       <Project>{3c14ba0a-0cbf-4803-8868-98ac12b48900}</Project>
       <Name>MyContract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\TestCertificates\TestCertificates.csproj">
+      <Project>{6e9d31e0-6fd4-495d-83e9-165241817e66}</Project>
+      <Name>TestCertificates</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

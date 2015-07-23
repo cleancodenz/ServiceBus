@@ -3,8 +3,13 @@
 
 using System;
 using System.ServiceModel;
+using System.ServiceModel.Description;
+using System.ServiceModel.Security;
+using CustomWCFComponents.MembershipProvider;
+using CustomWCFComponents.RoleProvider;
 using Microsoft.ServiceBus;
 using MyContract;
+using TestCertificates;
 
 namespace EchoServices
 {
@@ -12,7 +17,8 @@ namespace EchoServices
     {
         private static void Main(string[] args)
         {
-            Two();
+           // Two();
+            UserNameClient();
         }
 
         //NetTCP does not work because of tcp ports being blocked by firewall
@@ -51,7 +57,7 @@ namespace EchoServices
 
             // Create the binding with default settings.
             WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
-
+            //binding.Security.Mode = EndToEndSecurityMode.Message;
             // Get the service address.
             // Use the https scheme because by default the binding uses SSL for transport security.
             Uri address = ServiceBusEnvironment.CreateServiceUri("https", "johnsonwangnz", "MyService");
@@ -64,6 +70,60 @@ namespace EchoServices
             // Add the credentials through the endpoint behavior.
             host.Description.Endpoints[0].Behaviors.Add(relayCredentials);
             
+            // Start the service.
+            host.Open();
+
+            Console.WriteLine("Listening...");
+
+            Console.ReadLine();
+            host.Close();
+        }
+
+        private static void UserNameClient()
+        {
+            Console.WriteLine("Starting service...");
+
+            // Configure the credentials through an endpoint behavior.
+            TransportClientEndpointBehavior relayCredentials = new TransportClientEndpointBehavior();
+            relayCredentials.TokenProvider =
+              TokenProvider.CreateSharedAccessSignatureTokenProvider("RootManageSharedAccessKey", "fBLL/4/+rEsCOiTQPNPS6DJQybykqE2HdVBsILrzMLY=");
+
+            // Create the binding with default settings.
+            WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
+           
+            binding.Security.Mode = EndToEndSecurityMode.Message;
+            binding.Security.Message.EstablishSecurityContext = false;
+            binding.Security.Message.NegotiateServiceCredential = false;
+
+            // Get the service address.
+            // Use the https scheme because by default the binding uses SSL for transport security.
+            Uri address = ServiceBusEnvironment.CreateServiceUri("https", "johnsonwangnz", "MyService");
+
+            // Create the service host.
+            ServiceHost host = new ServiceHost(typeof(EchoService), address);
+
+            host.Credentials.ServiceCertificate.Certificate = MyCertificates.GetTestServiceCertificate();
+
+
+            //Change user name authentication 
+            host.Credentials.UserNameAuthentication.
+                UserNamePasswordValidationMode = UserNamePasswordValidationMode.MembershipProvider;
+
+            host.Credentials.UserNameAuthentication.MembershipProvider
+                 = new MyMemberShipProvider();
+
+            //set the authorization of user
+            var serviceAuthroization = host.Authorization;
+            serviceAuthroization.PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles;
+            serviceAuthroization.RoleProvider = new MyRoleProvider();
+
+            
+            // Add the service endpoint with the WS2007HttpRelayBinding.
+            host.AddServiceEndpoint(typeof(IEchoContract), binding, address);
+
+            // Add the credentials through the endpoint behavior.
+            host.Description.Endpoints[0].Behaviors.Add(relayCredentials);
+
             // Start the service.
             host.Open();
 
