@@ -4,7 +4,7 @@ using System.ServiceModel;
 
 namespace MyContract
 {
-    [ServiceContract(Name = "IEchoContract", Namespace = "http://samples.microsoft.com/ServiceModel/Relay/")]
+    [ServiceContract]
     public interface IEchoContract
     {
         [OperationContract]
