@@ -18,7 +18,8 @@ namespace EchoServices
         private static void Main(string[] args)
         {
            // Two();
-            UserNameClient();
+            Three();
+           // UserNameClient();
         }
 
         //NetTCP does not work because of tcp ports being blocked by firewall
@@ -46,6 +47,7 @@ namespace EchoServices
             sh.Close();
         }
 
+        //This is using root key which should be avoided in production 
         private static void Two()
         {
              Console.WriteLine("Starting service...");
@@ -79,6 +81,41 @@ namespace EchoServices
             host.Close();
         }
 
+        private static void Three()
+        {
+            Console.WriteLine("Starting service...");
+
+            // Configure the credentials through an endpoint behavior.
+            TransportClientEndpointBehavior relayCredentials = new TransportClientEndpointBehavior();
+            relayCredentials.TokenProvider =
+              TokenProvider.CreateSharedAccessSignatureTokenProvider("ListenAccessKeyMyService", "3VXc5wQwu479N/w2MaLtsk9fA7WWJsamsxtWcr8zbCY=");
+
+            // Create the binding with default settings.
+            WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
+
+            // it must be false to use previously generated relay endpoint and its special credentials
+            binding.IsDynamic = false;
+            //binding.Security.Mode = EndToEndSecurityMode.Message;
+            // Get the service address.
+            // Use the https scheme because by default the binding uses SSL for transport security.
+            Uri address = ServiceBusEnvironment.CreateServiceUri("https", "johnsonwangnz", "MyService");
+
+            // Create the service host.
+            ServiceHost host = new ServiceHost(typeof(EchoService), address);
+            // Add the service endpoint with the WS2007HttpRelayBinding.
+            host.AddServiceEndpoint(typeof(IEchoContract), binding, address);
+
+            // Add the credentials through the endpoint behavior.
+            host.Description.Endpoints[0].Behaviors.Add(relayCredentials);
+
+            // Start the service.
+            host.Open();
+
+            Console.WriteLine("Listening...");
+
+            Console.ReadLine();
+            host.Close();
+        }
         private static void UserNameClient()
         {
             Console.WriteLine("Starting service...");
