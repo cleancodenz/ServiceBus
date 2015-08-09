@@ -13,8 +13,8 @@ namespace EchoServiceClient
         static void Main(string[] args)
         {
            // WS2007HttpRelayClientTwo();
-            WS2007HttpRelayClientThree();
-           // WS2007HttpRelayUserNameClient();
+           // WS2007HttpRelayClientThree();
+            WS2007HttpRelayUserNameClient();
         }
 
         //The same as two, but different style creating environments
@@ -94,6 +94,8 @@ namespace EchoServiceClient
 
             // Create the binding with default settings.
             WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
+            
+            
             // it must be false to use previously generated relay endpoint and its special credentials
             binding.IsDynamic = false;
 
@@ -127,7 +129,7 @@ namespace EchoServiceClient
             // Configure the credentials through an endpoint behavior.
             TransportClientEndpointBehavior relayCredentials = new TransportClientEndpointBehavior();
             relayCredentials.TokenProvider =
-              TokenProvider.CreateSharedAccessSignatureTokenProvider("RootManageSharedAccessKey", "fBLL/4/+rEsCOiTQPNPS6DJQybykqE2HdVBsILrzMLY=");
+              TokenProvider.CreateSharedAccessSignatureTokenProvider("SendAccessKeyMyService", "e6b/gSiveCenfVEqBbUjTzuiAdRmjlcdT0ojMW1T2e8=");
 
 
             // Get the service address.
@@ -139,16 +141,16 @@ namespace EchoServiceClient
             // Create the binding with default settings.
             WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
 
+            // it must be false to use previously generated relay endpoint and its special credentials
+            binding.IsDynamic = false;
 
-            binding.Security.Mode = EndToEndSecurityMode.Message;
+            binding.Security.Mode = EndToEndSecurityMode.TransportWithMessageCredential;
+            binding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
+
             binding.Security.Message.EstablishSecurityContext = false;
             binding.Security.Message.NegotiateServiceCredential = false;
          
-
-            binding.Security.Message.ClientCredentialType =
-            MessageCredentialType.UserName;
-
-
+            
             // Create a channel factory for the specified channel type.
             // This channel factory is used to create client channels to the service. 
             // Each client channel the channel factory creates is configured to use the 

@@ -18,8 +18,8 @@ namespace EchoServices
         private static void Main(string[] args)
         {
            // Two();
-            Three();
-           // UserNameClient();
+           // Three();
+            UserNameClient();
         }
 
         //NetTCP does not work because of tcp ports being blocked by firewall
@@ -93,6 +93,7 @@ namespace EchoServices
             // Create the binding with default settings.
             WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
 
+           
             // it must be false to use previously generated relay endpoint and its special credentials
             binding.IsDynamic = false;
             //binding.Security.Mode = EndToEndSecurityMode.Message;
@@ -123,14 +124,19 @@ namespace EchoServices
             // Configure the credentials through an endpoint behavior.
             TransportClientEndpointBehavior relayCredentials = new TransportClientEndpointBehavior();
             relayCredentials.TokenProvider =
-              TokenProvider.CreateSharedAccessSignatureTokenProvider("RootManageSharedAccessKey", "fBLL/4/+rEsCOiTQPNPS6DJQybykqE2HdVBsILrzMLY=");
+              TokenProvider.CreateSharedAccessSignatureTokenProvider("ListenAccessKeyMyService", "3VXc5wQwu479N/w2MaLtsk9fA7WWJsamsxtWcr8zbCY=");
 
             // Create the binding with default settings.
             WS2007HttpRelayBinding binding = new WS2007HttpRelayBinding();
+
+            // it must be false to use previously generated relay endpoint and its special credentials
+            binding.IsDynamic = false;
            
-            binding.Security.Mode = EndToEndSecurityMode.Message;
+            binding.Security.Mode = EndToEndSecurityMode.TransportWithMessageCredential;
+            binding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
             binding.Security.Message.EstablishSecurityContext = false;
             binding.Security.Message.NegotiateServiceCredential = false;
+
 
             // Get the service address.
             // Use the https scheme because by default the binding uses SSL for transport security.
@@ -169,5 +175,7 @@ namespace EchoServices
             Console.ReadLine();
             host.Close();
         }
+
+       
     }
 }
